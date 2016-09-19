@@ -35,7 +35,7 @@ extern "C" {
 
 char *md5_file (char *path, int md5_size);
 char *md5_text (char *buf, int md5_size);
-char *get_string_cipher(char *string);
+int get_string_cipher(char *instr, int inlen, char *outstr, int *outlen);
 
 
 #ifdef __cplusplus

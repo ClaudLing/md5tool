@@ -103,29 +103,28 @@ char *md5_text (char *buf, int md5_size)
     return dump_md5(md5_size);
 }
 
-char *get_string_cipher(char *string)
+int get_string_cipher(char *instr, int inlen, char *outstr, int *outlen)
 {
     #define CIPHER_SIZE 4
     char *md5andcipher = NULL;
     int i;
-        
-    md5andcipher = (char *)malloc(strlen(string) + (CIPHER_SIZE + 1) * sizeof(char));
-    if (md5andcipher == NULL) {
-        fprintf(stderr, "malloc failed.\n");
-        return NULL;
+
+    if (*outlen < inlen + CIPHER_SIZE) {
+        return -1;
     }
-    memset(md5andcipher, 0, (CIPHER_SIZE + 1));    
+    memset(outstr, 0, *outlen);    
 
     MD5Init (&mdContext); 
-	MD5Update (&mdContext, string, strlen(string));
+	MD5Update (&mdContext, instr, inlen);
     MD5Update (&mdContext, CIPHER_STRING, strlen(CIPHER_STRING));
 	MD5Final (&mdContext);
       
-    strncpy(md5andcipher, string, strlen(string));
+    strncpy(outstr, instr, inlen);
     for (i=7; i<9; i++) {
-		sprintf(&md5andcipher[strlen(string) + (i-7)*2], "%02X", mdContext.digest[i]);
-	}    
-    return md5andcipher;
+		sprintf(&outstr[inlen + (i-7)*2], "%02X", mdContext.digest[i]);
+	}
+    *outlen = inlen + 4;
+    return 0;
 }
 
 
