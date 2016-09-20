@@ -79,7 +79,7 @@ char *md5_file (char *path, int md5_size)
 {
 	FILE *fp = NULL;
 	int bytes;
-	unsigned char data[1024];	
+	char data[1024];	
     
 	MD5Init (&mdContext); 
     fp = fopen (path, "rb");
