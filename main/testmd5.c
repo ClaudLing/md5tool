@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
 	char *md5 = NULL;
 	s32 opt = 0;
-    u8 mode = MODE_UNDEF;
+    u8 mode = MODE_TEXT;
     u8 scv_size = 4;
     s8 input[128] = {0};
     s8 buf[64] = {0};
@@ -29,7 +29,6 @@ int main(int argc, char *argv[])
         case 't':    
             strncpy(input, optarg, strlen(optarg));        
         	printf("[TEXT: %s]\n", input);
-            mode = MODE_TEXT;
             break;
         case 's':    
             scv_size = atol(optarg);
